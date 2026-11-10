@@ -109,11 +109,13 @@
       font-size: 44px;
       font-weight: 800;
       color: var(--accent);
-      transition: transform 0.15s ease;
+      display: inline-block;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
     }
 
     .wallet-amount.pulse {
-      transform: scale(1.08);
+      transform: scale(1.15);
+      color: #63e682;
     }
 
     .today-earned {
@@ -153,13 +155,31 @@
       padding: 14px 16px;
       border-radius: 12px;
       cursor: pointer;
-      transition: background 0.15s ease, border 0.15s ease;
       border: 1px solid transparent;
+      transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  background-color 0.25s ease,
+                  border-color 0.25s ease,
+                  box-shadow 0.25s ease;
+    }
+
+    .task-item:active {
+      transform: scale(0.97);
     }
 
     .task-item.completed {
-      background-color: rgba(48, 209, 88, 0.15);
-      border: 1px solid rgba(48, 209, 88, 0.4);
+      background-color: rgba(48, 209, 88, 0.16);
+      border-color: rgba(48, 209, 88, 0.5);
+      box-shadow: 0 4px 14px rgba(48, 209, 88, 0.15);
+    }
+
+    .task-item.pop {
+      animation: taskPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    @keyframes taskPop {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.03); }
+      100% { transform: scale(1); }
     }
 
     .task-left {
@@ -173,101 +193,32 @@
       height: 22px;
       accent-color: var(--accent);
       cursor: pointer;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    input[type="checkbox"]:checked {
+      transform: scale(1.12);
     }
 
     .task-name {
       font-size: 16px;
       font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .task-item.completed .task-name {
+      color: #ffffff;
     }
 
     .task-reward {
       font-size: 15px;
       font-weight: 700;
       color: var(--accent);
+      transition: transform 0.2s ease;
     }
 
-    .wishlist-slot,
-    .note-slot {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .wishlist-slot input[type="text"],
-    .note-slot input[type="text"] {
-      flex: 2;
-      background-color: var(--input-bg);
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      padding: 10px 12px;
-      border-radius: 10px;
-      font-size: 14px;
-      min-width: 0;
-    }
-
-    .wishlist-slot input[type="number"],
-    .note-slot input[type="number"] {
-      flex: 1;
-      background-color: var(--input-bg);
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      padding: 10px 10px;
-      border-radius: 10px;
-      font-size: 14px;
-      min-width: 70px;
-    }
-
-    .wishlist-slot input:focus,
-    .note-slot input:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
-
-    .info-btn {
-      width: 26px;
-      height: 26px;
-      border-radius: 50%;
-      border: 1px solid var(--text-muted);
-      background: transparent;
-      color: var(--text-main);
-      font-size: 13px;
-      font-weight: 700;
-      opacity: 0.5;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-
-    .info-btn:active {
-      opacity: 1;
-    }
-
-    .buy-btn {
-      background-color: var(--accent);
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      padding: 8px 10px;
-      font-size: 12px;
-      font-weight: 700;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-
-    .buy-btn:disabled {
-      background-color: var(--input-bg);
-      color: var(--text-muted);
-      opacity: 0.4;
-      cursor: not-allowed;
-    }
-
-    .summary-box {
-      margin-top: 16px;
-      padding-top: 14px;
-      border-top: 1px solid var(--border);
+    .task-item.completed .task-reward {
+      transform: scale(1.08);
     }
 
     .summary-row {
@@ -308,26 +259,6 @@
       margin-top: 2px;
     }
 
-    .notes-box {
-      margin-top: 18px;
-      padding-top: 14px;
-      border-top: 1px solid var(--border);
-    }
-
-    .notes-sum-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 10px;
-      font-size: 14px;
-    }
-
-    .notes-sum-row span:last-child {
-      font-weight: 700;
-      color: var(--accent);
-      font-size: 16px;
-    }
-
     .history-list {
       max-height: 180px;
       overflow-y: auto;
@@ -351,39 +282,6 @@
       font-size: 13px;
       padding: 12px 0;
     }
-
-    #toast {
-      position: fixed;
-      bottom: 30px;
-      left: 50%;
-      transform: translateX(-50%) translateY(100px);
-      background-color: #2c2c2e;
-      color: #fff;
-      border: 1px solid var(--accent);
-      padding: 14px 20px;
-      border-radius: 14px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
-      font-size: 14px;
-      text-align: center;
-      z-index: 1000;
-      opacity: 0;
-      transition: transform 0.25s ease, opacity 0.25s ease;
-      width: 90%;
-      max-width: 360px;
-      pointer-events: none;
-    }
-
-    #toast.show {
-      transform: translateX(-50%) translateY(0);
-      opacity: 1;
-    }
-
-    #toast strong {
-      color: var(--accent);
-      display: block;
-      margin-bottom: 4px;
-      font-size: 15px;
-    }
   </style>
 </head>
 <body>
@@ -403,30 +301,97 @@
       <span>Daily Workout</span>
       <span style="font-size: 12px; color: var(--text-muted);" id="dateDisplay"></span>
     </div>
-    <div class="task-list" id="taskList"></div>
+    <div class="task-list">
+      <label class="task-item" id="row-pushups">
+        <div class="task-left">
+          <input type="checkbox" id="chk-pushups" onchange="toggleTask('pushups')" />
+          <span class="task-name">25 Pushups</span>
+        </div>
+        <span class="task-reward">+$5</span>
+      </label>
+
+      <label class="task-item" id="row-situps">
+        <div class="task-left">
+          <input type="checkbox" id="chk-situps" onchange="toggleTask('situps')" />
+          <span class="task-name">25 Situps</span>
+        </div>
+        <span class="task-reward">+$5</span>
+      </label>
+
+      <label class="task-item" id="row-crunches">
+        <div class="task-left">
+          <input type="checkbox" id="chk-crunches" onchange="toggleTask('crunches')" />
+          <span class="task-name">25 Crunches</span>
+        </div>
+        <span class="task-reward">+$5</span>
+      </label>
+
+      <label class="task-item" id="row-steps">
+        <div class="task-left">
+          <input type="checkbox" id="chk-steps" onchange="toggleTask('steps')" />
+          <span class="task-name">10,000 Steps</span>
+        </div>
+        <span class="task-reward">+$5</span>
+      </label>
+    </div>
   </div>
 
   <div class="card">
     <div class="card-title">
       <span>Wishlist (Up to 5 Items)</span>
     </div>
-
-    <div id="wishlistContainer"></div>
-
-    <div class="summary-box">
-      <div class="summary-row">
-        <span style="color: var(--text-muted);">Wishlist Grand Total:</span>
-        <span id="grandTotalDisplay">$0.00</span>
+    <div class="summary-row">
+      <span style="color: var(--text-muted);">Wishlist Grand Total:</span>
+      <span id="grandTotalDisplay">$0.00</span>
+    </div>
+    <div class="summary-row">
+      <span style="color: var(--text-muted);">Remaining Needed:</span>
+      <span id="remainingDisplay">$0.00</span>
+    </div>
+    <div class="time-grid">
+      <div class="time-pill">
+        <div class="time-val" id="daysNeeded">0</div>
+        <div class="time-unit">Days</div>
       </div>
-      <div class="summary-row">
-        <span style="color: var(--text-muted);">Remaining Needed:</span>
-        <span id="remainingDisplay">$0.00</span>
+      <div class="time-pill">
+        <div class="time-val" id="weeksNeeded">0</div>
+        <div class="time-unit">Weeks</div>
       </div>
+      <div class="time-pill">
+        <div class="time-val" id="monthsNeeded">0</div>
+        <div class="time-unit">Months</div>
+      </div>
+    </div>
+  </div>
 
-      <div class="time-grid">
-        <div class="time-pill">
-          <div class="time-val" id="daysNeeded">0</div>
-          <div class="time-unit">Days</div>
-        </div>
-        <div class="time-pill">
-          <div class="time-val" id="weeksNeeded">0</div>
+  <div class="card">
+    <div class="card-title">
+      <span>Workout History</span>
+    </div>
+    <div class="history-list" id="historyList"></div>
+  </div>
+
+  <script>
+    const DAILY_MAX = 20;
+    const TASK_VALUE = 5;
+
+    function getTodayString() {
+      const now = new Date();
+      return now.getFullYear() + "-" +
+        String(now.getMonth() + 1).padStart(2, "0") + "-" +
+        String(now.getDate()).padStart(2, "0");
+    }
+
+    let state = {
+      wallet: 0,
+      lastActiveDate: getTodayString(),
+      tasks: {
+        pushups: false,
+        situps: false,
+        crunches: false,
+        steps: false
+      },
+      wishlist: [
+        { name: "", price: "" },
+        { name: "", price: "" },
+        { name: "", price: "" },
