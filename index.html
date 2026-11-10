@@ -155,7 +155,7 @@
       padding: 14px 16px;
       border-radius: 12px;
       cursor: pointer;
-      transition: background 0.15s ease, border 0.15s ease;
+      transition: background 0.2s;
       border: 1px solid transparent;
     }
 
@@ -188,7 +188,8 @@
       color: var(--accent);
     }
 
-    .wishlist-slot {
+    .wishlist-slot,
+    .note-slot {
       display: flex;
       align-items: center;
       gap: 8px;
@@ -196,7 +197,7 @@
     }
 
     .wishlist-slot input[type="text"],
-    .extra-note-row input[type="text"] {
+    .note-slot input[type="text"] {
       flex: 2;
       background-color: var(--input-bg);
       border: 1px solid var(--border);
@@ -208,7 +209,7 @@
     }
 
     .wishlist-slot input[type="number"],
-    .extra-note-row input[type="number"] {
+    .note-slot input[type="number"] {
       flex: 1;
       background-color: var(--input-bg);
       border: 1px solid var(--border);
@@ -216,11 +217,11 @@
       padding: 10px 10px;
       border-radius: 10px;
       font-size: 14px;
-      min-width: 75px;
+      min-width: 70px;
     }
 
     .wishlist-slot input:focus,
-    .extra-note-row input:focus {
+    .note-slot input:focus {
       outline: none;
       border-color: var(--accent);
     }
@@ -310,42 +311,24 @@
       margin-top: 2px;
     }
 
-    /* Extra Notes & Numbers Section */
-    .extra-notes-section {
+    .notes-box {
       margin-top: 18px;
-      padding-top: 16px;
+      padding-top: 14px;
       border-top: 1px solid var(--border);
     }
 
-    .extra-notes-title {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-muted);
-      margin-bottom: 10px;
-    }
-
-    .extra-note-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 10px;
-    }
-
-    .extra-sum-row {
+    .notes-sum-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-top: 12px;
-      padding: 10px 12px;
-      background-color: var(--input-bg);
-      border-radius: 10px;
+      margin-top: 10px;
       font-size: 14px;
     }
 
-    .extra-sum-row span:last-child {
-      font-size: 16px;
+    .notes-sum-row span:last-child {
       font-weight: 700;
       color: var(--accent);
+      font-size: 16px;
     }
 
     .history-list {
@@ -432,3 +415,13 @@
         <span class="task-reward">+$5</span>
       </label>
 
+      <label class="task-item" id="row-situps">
+        <div class="task-left">
+          <input type="checkbox" id="chk-situps" onchange="toggleTask('situps')" />
+          <span class="task-name">25 Situps</span>
+        </div>
+        <span class="task-reward">+$5</span>
+      </label>
+
+      <label class="task-item" id="row-crunches">
+        <div class="task-left">
