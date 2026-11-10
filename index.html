@@ -9,25 +9,21 @@
   <link id="appleIcon" rel="apple-touch-icon" href="" />
   <title>FitEarn Workout Tracker</title>
   <script>
-    // Generates a crisp 180x180 PNG Cash Dumbbell icon specifically for iOS Home Screen
     (function generateCashDumbbellIcon() {
       const canvas = document.createElement("canvas");
       canvas.width = 180;
       canvas.height = 180;
       const ctx = canvas.getContext("2d");
 
-      // Dark matte background
       ctx.fillStyle = "#1c1c1e";
       ctx.fillRect(0, 0, 180, 180);
 
-      // Outer dumbbell plates (darker green)
       ctx.fillStyle = "#248a3d";
       ctx.beginPath();
       ctx.roundRect(14, 74, 10, 32, 4);
       ctx.roundRect(156, 74, 10, 32, 4);
       ctx.fill();
 
-      // Inner dumbbell plates & center bar (neon green)
       ctx.fillStyle = "#30d158";
       ctx.beginPath();
       ctx.roundRect(28, 62, 18, 56, 6);
@@ -35,7 +31,6 @@
       ctx.fillRect(46, 83, 88, 14);
       ctx.fill();
 
-      // Center badge circle
       ctx.beginPath();
       ctx.arc(90, 90, 26, 0, Math.PI * 2);
       ctx.fillStyle = "#121214";
@@ -44,7 +39,6 @@
       ctx.strokeStyle = "#30d158";
       ctx.stroke();
 
-      // Dollar sign ($)
       ctx.fillStyle = "#ffffff";
       ctx.font = "900 32px -apple-system, BlinkMacSystemFont, Arial, sans-serif";
       ctx.textAlign = "center";
