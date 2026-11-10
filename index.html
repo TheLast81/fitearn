@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="FitEarn" />
+  <title>FitEarn Workout Tracker</title>
+  <style>
+    :root {
+      --bg-color: #121214;
+      --card-bg: #1c1c1e;
+      --input-bg: #2c2c2e;
+      --text-main: #f5f5f7;
+      --text-muted: #98989d;
+      --accent: #30d158;
+      --accent-dark: #248a3d;
+      --border: #38383a;
+      --danger: #ff453a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding: 20px 16px 60px;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+      padding-top: 10px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .wallet-card {
+      background: linear-gradient(145deg, #1f2922, #1c1c1e);
+      border: 1px solid #2c4433;
+      border-radius: 18px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .wallet-label {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .wallet-amount {
+      font-size: 44px;
+      font-weight: 800;
+      color: var(--accent);
+    }
+
+    .today-earned {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .card {
+      background-color: var(--card-bg);
+      border-radius: 16px;
+      padding: 18px;
+      margin-bottom: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .card-title {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .task-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background-color: var(--input-bg);
+      padding: 14px 16px;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .task-item.completed {
+      background-color: rgba(48, 209, 88, 0.15);
+      border: 1px solid rgba(48, 209, 88, 0.4);
+    }
+
+    .task-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    input[type="checkbox"] {
+      width: 22px;
+      height: 22px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .task-name {
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .task-reward {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* Wishlist Styles */
+    .wishlist-slot {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .wishlist-slot input[type="text"] {
+      flex: 2;
+      background-color: var(--input-bg);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 14px;
+      min-width: 0;
+    }
+
+    .wishlist-slot input[type="number"] {
+      flex: 1;
+      background-color: var(--input-bg);
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 10px 10px;
+      border-radius: 10px;
+      font-size: 14px;
+      min-width: 70px;
+    }
+
+    .wishlist-slot input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .info-btn {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      border: 1px solid var(--text-muted);
+      background: transparent;
+      color: var(--text-main);
+      font-size: 13px;
+      font-weight: 700;
+      opacity: 0.5;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: opacity 0.2s;
+    }
+
+    .info-btn:active {
+      opacity: 1;
+    }
+
+    .buy-btn {
+      background-color: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .buy-btn:disabled {
+      background-color: var(--input-bg);
+      color: var(--text-muted);
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .summary-box {
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .summary-row span:last-child {
+      font-weight: 700;
+    }
+
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 12px;
+      text-align: center;
+    }
+
+    .time-pill {
+      background-color: var(--input-bg);
+      padding: 10px 6px;
+      border-radius: 10px;
+    }
+
+    .time-val {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .time-unit {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+
+    /* History Styles */
+    .history-list {
+      max-height: 180px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      padding: 10px 12px;
+      background-color: var(--input-bg);
+      border-radius: 10px;
+    }
+
+    .history-empty {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      padding: 12px 0;
+    }
+
+    /* 3-Second Toast Popup */
+    #toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background-color: #2c2c2e;
+      color: #fff;
+      border: 1px solid var(--accent);
+      padding: 14px 20px;
+      border-radius: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      font-size: 14px;
+      text-align: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: transform 0.25s ease, opacity 0.25s ease;
+      width: 90%;
+      max-width: 360px;
+      pointer-events: none;
+    }
+
+    #toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    #toast strong {
+      color: var(--accent);
+      display: block;
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>FitEarn Tracker</h1>
+  </header>
+
+  <!-- Wallet Section -->
+  <div class="wallet-card">
+    <div class="wallet-label">Available Wallet Balance</div>
+    <div class="wallet-amount" id="walletDisplay">$0</div>
+    <div class="today-earned" id="todayDisplay">Earned today: $0 / $20</div>
+  </div>
+
+  <!-- Daily Workout Checklist -->
+  <div class="card">
+    <div class="card-title">
+      <span>Daily Workout</span>
+      <span style="font-size: 12px; color: var(--text-muted);" id="dateDisplay"></span>
+    </div>
+    <div class="task-list" id="taskList">
+      <label class="task-item" id="row-pushups">
+        <div class="task-left">
+          <input type="checkbox" id="chk-pushups" onchange="toggleTask('pushups')" />
+          <span class="task-name">25 Pushups</span>
+        </div>
+        <span class="task-reward">+$5</span>
+      </label>
+
+      <label class="task-item" id="row-situps">
+        <div class="task-left">
+          <input type="checkbox" id="chk-situps" onchange="toggleTask('situps')" />
+          <span class="task-name">25 Situps</span>
+        </div>
+        <span class="task-reward">+$5</span>
+      </label>
+
+      <label class="task-item" id="row-crunches">
+        <div class="task-left">
+          <input type="checkbox" id="chk-crunches" onchange="toggleTask('crunches')" />
+          <span class="task-name">25 Crunches</span>
+        </div>
+        <span class="task-reward">+$5</span>
+      </label>
+
+      <label class="task-item" id="row-steps">
+        <div class="task-left">
+          <input type="checkbox" id="chk-steps" onchange="toggleTask('steps')" />
+          <span class="task-name">10,000 Steps</span>
+        </div>
+        <span class="task-reward">+$5</span>
+      </label>
+    </div>
+  </div>
+
+  <!-- 5-Item Wishlist -->
+  <div class="card">
+    <div class="card-title">
+      <span>Wishlist (Up to 5 Items)</span>
+    </div>
+
+    <div id="wishlistContainer"></div>
+
+    <div class="summary-box">
+      <div class="summary-row">
+        <span style="color: var(--text-muted);">Wishlist Grand Total:</span>
+        <span id="grandTotalDisplay">$0.00</span>
+      </div>
+      <div class="summary-row">
+        <span style="color: var(--text-muted);">Remaining Needed:</span>
+        <span id="remainingDisplay">$0.00</span>
+      </div>
+
+      <div class="time-grid">
+        <div class="time-pill">
+          <div class="time-val" id="daysNeeded">0</div>
+          <div class="time-unit">Days</div>
+        </div>
+        <div class="time-pill">
+          <div class="time-val" id="weeksNeeded">0</div>
+          <div class="time-unit">Weeks</div>
+        </div>
+        <div class="time-pill">
+          <div class="time-val" id="monthsNeeded">0</div>
+          <div class="time-unit">Months</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- History Log -->
+  <div class="card">
+    <div class="card-title">
+      <span>Workout History</span>
+    </div>
+    <div class="history-list" id="historyList"></div>
+  </div>
+
